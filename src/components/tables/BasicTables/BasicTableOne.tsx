@@ -19,20 +19,6 @@ import { useState } from "react";
 import BillingRunModal from "../../customComponents/BillingModal";
 import { useBillingRun } from "../../../hooks/useBillingRun";
 
-interface Order {
-  id: number;
-  user: {
-    image: string;
-    name: string;
-    role: string;
-  };
-  projectName: string;
-  team: {
-    images: string[];
-  };
-  status: string;
-  budget: string;
-}
 
 function ZoneTable() {
   const { zones, loading, removeZone, pagination, fetchZones } = useZones();
