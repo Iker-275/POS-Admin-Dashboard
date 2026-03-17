@@ -1,197 +1,255 @@
-# TailAdmin React - Free React Tailwind Admin Dashboard Template
 
-TailAdmin is a free and open-source admin dashboard template built on **React and Tailwind CSS**, providing developers
-with everything they need to create a comprehensive, data-driven back-end,
-dashboard, or admin panel solution for upcoming web projects.
+# 📊 Utility Billing & Payment Management System (MERN)
 
-With TailAdmin, you get access to all the necessary dashboard UI components, elements, and pages required to build a
-feature-rich and complete dashboard or admin panel. Whether you're building dashboard or admin panel for a complex web
-application or a simple website, TailAdmin is the perfect solution to help you get up and running quickly.
+A full-stack MERN application designed to manage **water/utility billing, customer accounts, and payment processing**.
+Built with scalability and real-world operations in mind.
 
-![TailAdmin React.js Dashboard Preview](./banner.png)
+---
 
-## Overview
+## 🚀 Features
 
-TailAdmin provides essential UI components and layouts for building feature-rich, data-driven admin dashboards and
-control panels. It's built on:
+### 👥 Customer Management
 
-- React 19
-- TypeScript
-- Tailwind CSS v4
+* Create, edit, and view customers
+* Assign customers to **zones & villages**
+* Track customer balances
+* Bulk upload customers
 
-### Quick Links
+---
 
-- [✨ Visit Website](https://tailadmin.com)
-- [📄 Documentation](https://tailadmin.com/docs)
-- [⬇️ Download](https://tailadmin.com/download)
-- [🖌️ Figma Design File (Community Edition)](https://www.figma.com/community/file/1214477970819985778)
-- [⚡ Get PRO Version](https://tailadmin.com/pricing)
+### 💡 Billing System
 
-### Demos
+* Run billing:
 
-- [Free Version](https://free-react-demo.tailadmin.com/)
-- [Pro Version](https://react-demo.tailadmin.com)
+  * Global (all customers)
+  * Zone-based
+  * Village-based
+* Assign billing periods
+* Apply rates dynamically
+* Track:
 
-### Other Versions
+  * Units consumed
+  * Charges
+  * Penalties
+* View billed & **unbilled customers**
+* Billing summary and stats
 
-- [HTML Version](https://github.com/TailAdmin/tailadmin-free-tailwind-dashboard-template)
-- [Next.js Version](https://github.com/TailAdmin/free-nextjs-admin-dashboard)
-- [Vue.js Version](https://github.com/TailAdmin/vue-tailwind-admin-dashboard)
-- [Angular Version](https://github.com/TailAdmin/free-angular-tailwind-dashboard)
-- [Laravel Version](https://github.com/TailAdmin/tailadmin-laravel)
+---
 
-## Installation
+### 💳 Payments System
 
-### Prerequisites
+* Record single payments
+* Bulk payment processing
+* Cancel payments with reason
+* Automatic allocation of payments to bills
+* Payment status tracking (ACTIVE, CANCELLED)
 
-To get started with TailAdmin, ensure you have the following prerequisites installed and set up:
+---
 
-- Node.js 18.x or later (recommended to use Node.js 20.x or later)
+### 🧾 Receipts & Reports
 
-### Cloning the Repository
+* Payment receipt modal with:
 
-Clone the repository using the following command:
+  * Allocation breakdown
+  * Billing references
+* PDF reports:
 
-```bash
-git clone https://github.com/TailAdmin/free-react-tailwind-admin-dashboard.git
+  * Payments report
+  * (Extensible to billing reports)
+* Print-ready receipt view
+
+---
+
+### 📊 Filtering & Search
+
+Across modules:
+
+* Zone & village filtering
+* Customer filtering
+* Status filtering
+* Date range filtering
+* Period-based filtering
+
+---
+
+### 🔐 Authentication & Access Control
+
+* Protected routes
+* User-based actions (e.g., billing, payments)
+* Context-based auth handling
+
+---
+
+## 🧱 Tech Stack
+
+### Frontend
+
+* React (Vite)
+* TypeScript
+* Tailwind CSS
+* Context API (state management)
+
+### Backend
+
+* Node.js
+* Express.js
+* MongoDB (Mongoose)
+
+---
+
+## 🧠 Architecture
+
+The system follows a **modular, scalable architecture**:
+
+```
+src/
+ ├── api/            # API service layer
+ ├── hooks/          # Custom hooks (logic layer)
+ ├── context/        # Global state
+ ├── components/     # UI components
+ ├── pages/          # Screens
+ ├── types/          # TypeScript models
 ```
 
-> Windows Users: place the repository near the root of your drive if you face issues while cloning.
+### Design Principles
 
-1. Install dependencies:
+* Separation of concerns:
 
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
+  * **Context → State**
+  * **Hooks → Logic**
+  * **API → Network layer**
+* Reusable UI components
+* Scalable filtering system
+* Modal-driven workflows
 
-2. Start the development server:
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
+---
 
-## Components
+## 🔄 Core Workflows
 
-TailAdmin is a pre-designed starting point for building a web-based dashboard using React.js and Tailwind CSS. The
-template includes:
+### Billing Flow
 
-- Sophisticated and accessible sidebar
-- Data visualization components
-- Prebuilt profile management and 404 page
-- Tables and Charts(Line and Bar)
-- Authentication forms and input elements
-- Alerts, Dropdowns, Modals, Buttons and more
-- FAQ & Accordion, Testimonials, and Carousels
-- Can't forget Dark Mode 🕶️
+1. Select billing period & rate
+2. Choose scope (global / zone / village)
+3. Run billing
+4. View results & stats
 
-All components are built with React and styled using Tailwind CSS for easy customization.
+---
 
-## Feature Comparison
+### Payment Flow
 
-### Free Version
+1. Record payment
+2. System auto-allocates to bills
+3. View receipt (allocations breakdown)
+4. Cancel if necessary (with audit trail)
 
-- 1 Unique Dashboard
-- 35+ dashboard components
-- 50+ UI elements
-- Basic Figma design files
-- Community support
+---
 
-### Pro Version
+### Unbilled Workflow
 
-- 7 Unique Dashboards: Analytics, Ecommerce, Marketing, CRM, SaaS, Stocks, Logistics (more coming soon)
-- 500+ dashboard components and UI elements
-- Complete Figma design file
-- Email support
+1. Filter by billing period
+2. Identify unbilled customers
+3. Investigate reasons
+4. Export report (PDF)
 
-To learn more about pro version features and pricing, visit our [pricing page](https://tailadmin.com/pricing).
+---
 
-## Changelog
+## 📦 API Overview
 
-### Version 2.1.0 - [Dec 30, 2025]
+### Payments
 
-- Resolved Date Picker positioning and input issues in Charts.
+* `GET /payments`
+* `GET /payments/:id`
+* `POST /payments/clear`
+* `POST /payments/bulk-clear`
+* `POST /payments/:id/cancel`
+* `GET /payments/reports/payments/pdf`
 
-### Version 2.0.2 - [March 25, 2025]
+---
 
-- Upgraded to React 19
-- Included overrides for packages to prevent peer dependency errors.
-- Migrated from react-flatpickr to flatpickr package for React 19 support
+### Billing
 
-### Version 2.0.1 - [February 27, 2025]
+* Run billing (global/zone/village)
+* Fetch billings
+* Fetch unbilled customers
 
-#### Update Overview
+---
 
-- Upgraded to Tailwind CSS v4 for better performance and efficiency.
-- Updated class usage to match the latest syntax and features.
-- Replaced deprecated class and optimized styles.
+## ⚙️ Setup
 
-#### Next Steps
+### 1. Clone Repo
 
-- Run npm install or yarn install to update dependencies.
-- Check for any style changes or compatibility issues.
-- Refer to the Tailwind CSS v4 [Migration Guide](https://tailwindcss.com/docs/upgrade-guide) on this release. if needed.
-- This update keeps the project up to date with the latest Tailwind improvements. 🚀
+```bash
+git clone <repo-url>
+cd project
+```
 
-### Version 2.0.0 - [February 2025]
+### 2. Install Dependencies
 
-A major update with comprehensive redesign and modern React patterns implementation.
+```bash
+# frontend
+cd client
+npm install
 
-#### Major Improvements
+# backend
+cd server
+npm install
+```
 
-- Complete UI redesign with modern React patterns
-- New features: collapsible sidebar, chat, and calendar
-- Improved performance and accessibility
-- Updated data visualization using ApexCharts
+---
 
-#### Key Features
+### 3. Environment Variables
 
-- Redesigned dashboards (Ecommerce, Analytics, Marketing, CRM)
-- Enhanced navigation with React Router integration
-- Advanced tables with sorting and filtering
-- Calendar with drag-and-drop support
-- New UI components and improved existing ones
+Create `.env` in backend:
 
-#### Breaking Changes
+```env
+MONGO_URI=your_mongodb_uri
+JWT_SECRET=your_secret
+PORT=5000
+```
 
-- Updated sidebar component API
-- Migrated charts to ApexCharts
-- Revised authentication system
+---
 
-[Read more](https://tailadmin.com/docs/update-logs/react) on this release.
+### 4. Run App
 
-### Version 1.3.7 - [June 20, 2024]
+```bash
+# backend
+npm run dev
 
-#### Enhancements
+# frontend
+npm run dev
+```
 
-1. Remove Repetition of DefaultLayout in every Pages
-2. Add ClickOutside Component for reduce repeated functionality in Header Message, Notification and User Dropdowns.
+---
 
-### Version 1.3.6 - [Jan 31, 2024]
+## 📸 Screens (Optional)
 
-#### Enhancements
+* Dashboard
+* Billing Page
+* Payments Page
+* Receipt Modal
+* Unbilled Customers
 
-1. Integrate flatpickr in [Date Picker/Form Elements]
-2. Change color after select an option [Select Element/Form Elements].
-3. Make it functional [Multiselect Dropdown/Form Elements].
-4. Make best value editable [Pricing Table One/Pricing Table].
-5. Rearrange Folder structure.
+---
 
-### Version 1.2.0 - [Apr 28, 2023]
+## 📈 Future Improvements
 
-- Add Typescript in TailAdmin React.
+* Customer Ledger (billing + payments history)
+* Role-based access control (RBAC)
+* Advanced analytics dashboard
+* SMS/Email notifications
+* Payment integrations (mobile money, card)
+* Export to Excel
 
-### Version 1.0.0 - Initial Release - [Mar 13, 2023]
+---
 
-- Initial release of TailAdmin React.
+## 🧑‍💻 Author
 
-## License
+Built as a scalable utility management solution using MERN stack.
 
-TailAdmin React.js Free Version is released under the MIT License.
+---
 
-## Support
+## 📄 License
 
-If you find this project helpful, please consider giving it a star on GitHub. Your support helps us continue developing
-and maintaining this template.
+MIT License
+
+
