@@ -22,7 +22,6 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
     // This code will only run on the client side
     const savedTheme = localStorage.getItem("theme") as Theme | null;
     const initialTheme = savedTheme || "light"; // Default to light theme
-
     setTheme(initialTheme);
     setIsInitialized(true);
   }, []);
@@ -35,6 +34,8 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({
       } else {
         document.documentElement.classList.remove("dark");
       }
+      console.log("Theme:", theme);
+
     }
   }, [theme, isInitialized]);
 
