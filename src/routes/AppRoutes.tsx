@@ -1,4 +1,4 @@
-import { lazy } from "react";
+
 import { Routes, Route, BrowserRouter as Router } from "react-router-dom";
 import AppLayout from "../layout/AppLayout"
 import Home from "../pages/Dashboard/Home";
@@ -32,47 +32,7 @@ import PaymentsPage from "../pages/PaymentPages/PaymentPage";
 
 
 
-// const AppRoutes = () => {
-//     return (
-//         <>
-//             <Router>
-//                 <Routes>
-//                     {/* DASHBOARD LAYOUT APPLY */}
-//                     <Route element={<ProtectedRoute><AppLayout /> </ProtectedRoute>}>
-//                         <Route path="/" element={<Home />} />
-//                         <Route path="/zones" element={<Zones />} />
-//                         <Route path="/zones/create" element={<CreateZone />} />
-//                         <Route path="/zones/edit/:id" element={<EditZone />} />
-//                         <Route path="/villages" element={<Villages />} />
-//                         <Route path="/villages/create" element={<CreateVillage />} />
-//                         <Route path="/villages/edit/:id" element={<EditVillage/>} />
-//                         <Route path="/users" element={<Users />} />
-//                         <Route path="/users/edit/:id" element={<EditUser/>} />
-//                         <Route path="/billing-periods" element={<BillingPeriods />} />
-//                         <Route path="/billing-periods/create" element={<CreatePeriod/>} />
-//                         <Route path="/roles" element={<Roles />} />
-//                         <Route path="/roles/create" element={<CreateRole/>} />
-//                         <Route path="/roles/edit/:id" element={<UpdateRole/>} />
-//                         <Route path="/rates" element={<Rates />} />
-//                         <Route path="/rates/create" element={<CreateRate/>} />
-//                         <Route path="/customers" element={<CustomersPage />} />
-//                         <Route path="/customers/:id" element={<CustomerPage />} />
-//                         <Route path="/customers/create" element={<CreateCustomer />} />
-//                         <Route path="/customers/create/bulk" element={<BulkCreateCustomer />} />
-//                         <Route path="/customers/edit/:id" element={<EditCustomer/>} />
-//                     </Route>
 
-
-//                     <Route path="/signin" element={<SignIn />} />
-//                     <Route path="/signup" element={<SignUp />} />
-
-//                     <Route path="*" element={<NotFound />} />
-//                 </Routes>
-//             </Router>
-//         </>
-
-//     );
-// }
 
 const AppRoutes = () => {
   return (

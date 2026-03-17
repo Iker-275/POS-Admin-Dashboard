@@ -1,6 +1,6 @@
 import PageMeta from "../../components/common/PageMeta";
 import ComponentCard from "../../components/common/ComponentCard";
-import {BasicTableOne, VillageTable, ZoneTable} from "../../components/tables/BasicTables/BasicTableOne";
+import {VillageTable} from "../../components/tables/BasicTables/BasicTableOne";
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 
 export default function Villages() {

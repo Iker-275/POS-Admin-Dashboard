@@ -1,59 +1,3 @@
-// import { useState } from "react";
-// import ComponentCard from "../common/ComponentCard";
-// import Label from "../form/Label";
-// import Input from "../form/input/InputField.tsx";
-// import { EyeCloseIcon, EyeIcon, TimeIcon } from "../../icons";
-// import DatePicker from "../form/date-picker.tsx";
-// import Switch from "../form/switch/Switch.tsx";
-// import Button from "../ui/button/Button.tsx";
-// import Select from "../customComponents/DropDowns.tsx";
-
-// export default function UserForm() {
-  
-//   const options = [
-//     { value: "marketing", label: "Marketing" },
-//     { value: "template", label: "Template" },
-//     { value: "development", label: "Development" },
-//   ];
-//   const handleSelectChange = (value: string) => {
-//     console.log("Selected value:", value);
-//   };
-
-//   return (
-//     <ComponentCard title="Edit User">
-//       <div className="space-y-6">
-        
-//         <div>
-//           <Label htmlFor="email">Email</Label>
-//           <Input type="text" id="email" placeholder="info@gmail.com" />
-//         </div>
-//         <div>
-//           <Label>Select Role</Label>
-//           <Select
-//             options={options}
-//             placeholder="Select an option"
-//             onChange={handleSelectChange}
-//             className="dark:bg-dark-900"
-//           />
-//         </div>
-       
-
-      
-//       <Switch label="Status"/>
-//       {/* Buttons */}
-//       <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
-//         <Button variant="outline">Cancel</Button>
-
-//         <Button variant="outline" onClick={handleSubmit} disabled={loading}>
-//           {loading
-//             ? "Saving..."
-//             : "Update User"}
-//         </Button>
-//       </div>
-//     </ComponentCard>
-//   );
-// }
-
 
 import { useState, useEffect } from "react";
 import ComponentCard from "../common/ComponentCard";
@@ -78,7 +22,6 @@ interface UserFormProps {
 }
 
 export default function UserForm({
-  mode,
   initialData,
   onSubmit,
 }: UserFormProps) {

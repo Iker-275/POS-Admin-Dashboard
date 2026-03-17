@@ -14,7 +14,7 @@ interface Props {
 export default function AuthForm({ mode }: Props) {
     const nav = useNavigate();
 
-    const { loginUser, signupUser, token ,loading} = useAuth();
+    const { loginUser, signupUser,} = useAuth();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -30,9 +30,9 @@ export default function AuthForm({ mode }: Props) {
         try {
 
             if (isSignup) {
-                const res = await signupUser(email, password);
+                 await signupUser(email, password);
             } else {
-                const res = await loginUser(email, password);
+                 await loginUser(email, password);
 
             }
               nav("/")

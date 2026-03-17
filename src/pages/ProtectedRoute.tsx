@@ -1,16 +1,3 @@
-// import { Navigate } from "react-router-dom";
-// import { useAuth } from "../hooks/useAuth";
-
-// export default function ProtectedRoute({ children }: any) {
-
-//   const { user, loading } = useAuth();
-
-//   if (loading) return null;
-
-//   if (!user) return <Navigate to="/signin" />;
-
-//   return children;
-// }
 
 
 import { Navigate, Outlet } from "react-router-dom";
@@ -18,8 +5,8 @@ import { useAuth } from "../hooks/useAuth";
 
 function ProtectedRoute() {
 
-  const { user, loading ,token,logout} = useAuth();
-  console.log("User from context",user);
+  const {  loading ,token} = useAuth();
+  
   
 
   if (loading) return null;
@@ -35,7 +22,7 @@ function ProtectedRoute() {
 
  function AuthRoute() {
 
-  const { user, loading ,token,logout} = useAuth();
+  const {  loading ,token} = useAuth();
 
   if (loading) return null;
 

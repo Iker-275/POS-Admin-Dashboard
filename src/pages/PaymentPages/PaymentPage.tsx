@@ -11,8 +11,6 @@ import PdfPreviewModal from "../../components/customComponents/PDFPreview";
 import { usePayments } from "../../hooks/usePayment";
 import { usePaymentActions } from "../../hooks/usePaymentActions";
 import { useAuth } from "../../hooks/useAuth";
-
-import { paymentService } from "../../api/PaymentApi";
 import PaymentReceiptModal from "../../components/customComponents/ReceiptModal";
 
 export default function PaymentsPage() {

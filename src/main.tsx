@@ -15,7 +15,6 @@ import { UserProvider } from './context/UserContext.tsx';
 import { BillingPeriodProvider } from './context/BillingPeriodContext.tsx';
 import { RateProvider } from './context/RateContext.tsx';
 import { AuthProvider } from './context/AuthContext.tsx';
-import { BillingContext } from './context/BillingContext.tsx';
 import { PaymentProvider } from './context/PaymentContext.tsx';
 
 

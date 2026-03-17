@@ -2,7 +2,6 @@ import { useParams, Link } from "react-router-dom";
 import { useCustomer } from "../../hooks/useCustomer";
 import { useModal } from "../../hooks/useModal";
 import { Modal } from "../ui/modal";
-import Button from "../ui/button/Button";
 import CustomerForm from "../customforms/CustomerForm";
 
 export default function CustomerInfoCard() {

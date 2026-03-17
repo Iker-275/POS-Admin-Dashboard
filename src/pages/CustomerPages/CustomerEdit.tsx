@@ -1,8 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import CustomerForm from "../../components/customforms/CustomerForm";
 import { useCustomer } from "../../hooks/useCustomer";
-import { Modal } from "../../components/ui/modal";
-import { useModal } from "../../hooks/useModal";
+
 
 export default function EditCustomer() {
     

@@ -1,6 +1,5 @@
 import api from "./api";
 import {
-  Customer,
   CustomersResponse,
   CustomerResponse,
   CustomerStatementResponse,

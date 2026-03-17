@@ -33,7 +33,7 @@ export const RateProvider = ({ children }: { children: React.ReactNode }) => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
 
-  const fetchRates = async (page = 1) => {
+  const fetchRates = async () => {
     try {
       setLoading(true);
       setError("");

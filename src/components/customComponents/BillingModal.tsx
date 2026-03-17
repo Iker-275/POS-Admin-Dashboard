@@ -4,9 +4,6 @@ import { useBillingPeriods } from "../../hooks/usePeriod";
 import { useRates } from "../../hooks/useRate";
 import { useZones } from "../../hooks/useZone";
 import { useVillage } from "../../hooks/useVillage";
-
-import Select from "../customComponents/DropDowns";
-
 interface Props {
     open: boolean;
     runType: "GLOBAL" | "ZONE" | "VILLAGE";

@@ -43,7 +43,7 @@ export const BillingPeriodProvider = ({ children }: Props) => {
   const [message, setMessage] = useState<string>("");
   const [error, setError] = useState<string>("");
 
-  const fetchPeriods = async (page = 1) => {
+  const fetchPeriods = async () => {
     try {
       setLoading(true);
       setError("");

@@ -1,6 +1,6 @@
 import PageMeta from "../../components/common/PageMeta";
 import ComponentCard from "../../components/common/ComponentCard";
-import {BasicTableOne, PeriodsTable, UsersTable, ZoneTable} from "../../components/tables/BasicTables/BasicTableOne";
+import {PeriodsTable,} from "../../components/tables/BasicTables/BasicTableOne";
 import PageBreadcrumb from "../../components/common/PageBreadCrumb";
 
 export default function BillingPeriods() {

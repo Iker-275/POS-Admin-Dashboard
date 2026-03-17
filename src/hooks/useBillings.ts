@@ -2,7 +2,7 @@ import { useEffect,useState } from "react";
 import { billingService } from "../api/BillingApi";
 
 export function useBillings(
-    { page, limit, filters }: any
+    {  filters }: any
   //  params:any
 ){
 
