@@ -47,24 +47,7 @@ const navItems: NavItem[] = [
      path: "/customers",
    
   },
-  {
-    icon: <ListIcon />,
-    name: "Billings",
-     path: "/billings",
-   
-  },
-  {
-    icon: <DollarLineIcon />,
-    name: "Payments",
-     path: "/payments",
-   
-  },
-   {
-    icon: <TaskIcon />,
-    name: "Visits",
-     path: "/visits",
-   
-  },
+ 
    {
     icon: <BoxCubeIcon />,
     name: "Roles",
@@ -72,29 +55,28 @@ const navItems: NavItem[] = [
    
   },
   {
-    icon: <ListIcon />,
-    name: "Zones",
-     path: "/zones",
+    icon: <BoxCubeIcon />,
+    name: "Menu",
+     path: "/menu",
    
   },
+ 
+  
+  
   {
-    icon: <ListIcon />,
-    name: "Villages",
-     path: "/villages",
+    icon: <BoxCubeIcon />,
+    name: "Orders",
+     path: "/orders",
    
   },
-  {
-    icon: <CalenderIcon />,
-    name: "Billing Periods",
-     path: "/billing-periods",
+   {
+    icon: <BoxCubeIcon />,
+    name: "Order Status",
+     path: "/order-status",
    
   },
-  {
-    icon: <PieChartIcon />,
-    name: "Rates",
-     path: "/rates",
-   
-  },
+ 
+ 
   {
     icon: <MailIcon />,
     name: "Create Notification",

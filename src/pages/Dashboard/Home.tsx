@@ -1,6 +1,6 @@
 
 import PageMeta from "../../components/common/PageMeta";
-import { BillingSummary } from "../../components/customComponents/BillingSummary";
+
 import { RecentPayments, RecentVisits } from "../../components/customComponents/Recents";
 import EcommerceMetrics from "../../components/ecommerce/EcommerceMetrics";
 import BillingVsPaymentsChart from "../../components/ecommerce/StatisticsChart";
@@ -21,9 +21,9 @@ export default function Home() {
           <BillingVsPaymentsChart data={dashboard} />
         </div>
 
-        <div className="col-span-12 xl:col-span-5">
+        {/* <div className="col-span-12 xl:col-span-5">
           <BillingSummary data={dashboard} />
-        </div>
+        </div> */}
 
         <div className="col-span-12">
           <RecentVisits visits={dashboard?.visits?.recent || []} />

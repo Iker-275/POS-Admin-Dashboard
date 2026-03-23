@@ -1,255 +1,211 @@
 
-# 📊 Utility Billing & Payment Management System (MERN)
 
-A full-stack MERN application designed to manage **water/utility billing, customer accounts, and payment processing**.
-Built with scalability and real-world operations in mind.
+# Restaurant & Customer Management System
 
----
+## Table of Contents
 
-## 🚀 Features
-
-### 👥 Customer Management
-
-* Create, edit, and view customers
-* Assign customers to **zones & villages**
-* Track customer balances
-* Bulk upload customers
-
----
-
-### 💡 Billing System
-
-* Run billing:
-
-  * Global (all customers)
-  * Zone-based
-  * Village-based
-* Assign billing periods
-* Apply rates dynamically
-* Track:
-
-  * Units consumed
-  * Charges
-  * Penalties
-* View billed & **unbilled customers**
-* Billing summary and stats
+* [Project Overview](#project-overview)
+* [Features](#features)
+* [Tech Stack](#tech-stack)
+* [Folder Structure](#folder-structure)
+* [Getting Started](#getting-started)
+* [Available Pages & Components](#available-pages--components)
+* [API Integration](#api-integration)
+* [Hooks & State Management](#hooks--state-management)
+* [Contributing](#contributing)
+* [License](#license)
 
 ---
 
-### 💳 Payments System
+## Project Overview
 
-* Record single payments
+This is a **Restaurant & Customer Management System** built with **React (TypeScript)** for the frontend. The application allows administrators to manage **customers, orders, menus, and roles** efficiently. It provides features such as:
+
+* Customer management (CRUD, unpaid balances tracking)
+* Order management (CRUD, bulk payments, order status updates)
+* Role management (CRUD, active/inactive toggling)
+* Filters, tables with pagination, and dynamic dashboards
+* Tailwind CSS for responsive and clean UI design
+
+The system uses a **context + hooks architecture** to manage state consistently across all modules.
+
+---
+
+## Features
+
+### Customers
+
+* Create, update, and view customer details
+* Track total balances and unpaid orders
+* Filters by name, phone, status, and balance
+
+### Orders
+
+* Create, update, cancel, and view orders
 * Bulk payment processing
-* Cancel payments with reason
-* Automatic allocation of payments to bills
-* Payment status tracking (ACTIVE, CANCELLED)
+* Track order totals, balances, and payment status
+* Filters by status, customer, and date
+
+### Roles
+
+* Create, update, delete roles
+* Toggle active/inactive status
+* Assign roles to users
+
+### UI/UX
+
+* Responsive tables with pagination
+* Reusable **ComponentCard** wrappers
+* Toggle switches for active/unpaid status
+* Filters with debounced input
 
 ---
 
-### 🧾 Receipts & Reports
+## Tech Stack
 
-* Payment receipt modal with:
-
-  * Allocation breakdown
-  * Billing references
-* PDF reports:
-
-  * Payments report
-  * (Extensible to billing reports)
-* Print-ready receipt view
+* **Frontend:** React, TypeScript
+* **UI/Styling:** Tailwind CSS
+* **Routing:** React Router DOM
+* **State Management:** React Context + Custom Hooks
+* **Forms:** Custom input components with validation
+* **API Integration:** Axios for REST API calls
 
 ---
 
-### 📊 Filtering & Search
-
-Across modules:
-
-* Zone & village filtering
-* Customer filtering
-* Status filtering
-* Date range filtering
-* Period-based filtering
-
----
-
-### 🔐 Authentication & Access Control
-
-* Protected routes
-* User-based actions (e.g., billing, payments)
-* Context-based auth handling
-
----
-
-## 🧱 Tech Stack
-
-### Frontend
-
-* React (Vite)
-* TypeScript
-* Tailwind CSS
-* Context API (state management)
-
-### Backend
-
-* Node.js
-* Express.js
-* MongoDB (Mongoose)
-
----
-
-## 🧠 Architecture
-
-The system follows a **modular, scalable architecture**:
+## Folder Structure
 
 ```
 src/
- ├── api/            # API service layer
- ├── hooks/          # Custom hooks (logic layer)
- ├── context/        # Global state
- ├── components/     # UI components
- ├── pages/          # Screens
- ├── types/          # TypeScript models
+├─ api/                 # API services for orders, customers, roles
+├─ components/
+│  ├─ common/           # Shared UI components (ComponentCard, PageMeta, Breadcrumb)
+│  ├─ form/             # Form inputs & reusable fields
+│  ├─ tables/           # Table components for Roles, Orders, Customers
+│  └─ customComponents/ # Switch, Select dropdowns, Filters
+├─ context/             # Context providers for orders, customers, roles, status
+├─ hooks/               # Custom hooks for data fetching & state management
+├─ pages/
+│  ├─ roles/
+│  ├─ orders/
+│  └─ customers/
+├─ types/               # TypeScript types and interfaces
+├─ utils/               # Helper functions
+└─ App.tsx
 ```
 
-### Design Principles
-
-* Separation of concerns:
-
-  * **Context → State**
-  * **Hooks → Logic**
-  * **API → Network layer**
-* Reusable UI components
-* Scalable filtering system
-* Modal-driven workflows
-
 ---
 
-## 🔄 Core Workflows
+## Getting Started
 
-### Billing Flow
+### Prerequisites
 
-1. Select billing period & rate
-2. Choose scope (global / zone / village)
-3. Run billing
-4. View results & stats
+* Node.js v18+
+* npm or yarn
+* Backend API server (REST endpoints for customers, orders, roles)
 
----
-
-### Payment Flow
-
-1. Record payment
-2. System auto-allocates to bills
-3. View receipt (allocations breakdown)
-4. Cancel if necessary (with audit trail)
-
----
-
-### Unbilled Workflow
-
-1. Filter by billing period
-2. Identify unbilled customers
-3. Investigate reasons
-4. Export report (PDF)
-
----
-
-## 📦 API Overview
-
-### Payments
-
-* `GET /payments`
-* `GET /payments/:id`
-* `POST /payments/clear`
-* `POST /payments/bulk-clear`
-* `POST /payments/:id/cancel`
-* `GET /payments/reports/payments/pdf`
-
----
-
-### Billing
-
-* Run billing (global/zone/village)
-* Fetch billings
-* Fetch unbilled customers
-
----
-
-## ⚙️ Setup
-
-### 1. Clone Repo
+### Installation
 
 ```bash
-git clone <repo-url>
-cd project
-```
+# Clone the repository
+git clone <repository_url>
+cd <project_folder>
 
-### 2. Install Dependencies
-
-```bash
-# frontend
-cd client
+# Install dependencies
 npm install
+# or
+yarn install
 
-# backend
-cd server
-npm install
-```
-
----
-
-### 3. Environment Variables
-
-Create `.env` in backend:
-
-```env
-MONGO_URI=your_mongodb_uri
-JWT_SECRET=your_secret
-PORT=5000
-```
-
----
-
-### 4. Run App
-
-```bash
-# backend
+# Start the development server
 npm run dev
-
-# frontend
-npm run dev
+# or
+yarn dev
 ```
 
----
-
-## 📸 Screens (Optional)
-
-* Dashboard
-* Billing Page
-* Payments Page
-* Receipt Modal
-* Unbilled Customers
+Open [http://localhost:3000](http://localhost:3000) to view the application in your browser.
 
 ---
 
-## 📈 Future Improvements
+## Available Pages & Components
 
-* Customer Ledger (billing + payments history)
-* Role-based access control (RBAC)
-* Advanced analytics dashboard
-* SMS/Email notifications
-* Payment integrations (mobile money, card)
-* Export to Excel
+### Roles
+
+* **RolesTable:** View all roles with pagination
+* **CreateRolePage & UpdateRolePage:** Manage roles
+* **RoleForm:** Reusable form for create/update
+
+### Customers
+
+* **CustomersTable:** View all customers with filters & pagination
+* **CustomerForm:** Create/update customer
+* **CustomerDetailsPage:** View customer info and unpaid balances
+
+### Orders
+
+* **OrdersTable:** View orders, supports bulk pay, cancel
+* **OrderFilters:** Filter orders by customer/status/date
+* **OrderDetailsPage:** View detailed order info
 
 ---
 
-## 🧑‍💻 Author
+## API Integration
 
-Built as a scalable utility management solution using MERN stack.
+The frontend expects REST endpoints for:
+
+### Customers
+
+* GET `/customers`
+* GET `/customers/:id`
+* POST `/customers`
+* PUT `/customers/:id`
+
+### Orders
+
+* GET `/orders`
+* GET `/orders/:id`
+* POST `/orders`
+* PUT `/orders/:id`
+* POST `/orders/bulk-pay`
+
+### Roles
+
+* GET `/roles`
+* POST `/roles`
+* PUT `/roles/:id`
+* DELETE `/roles/:id`
+
+The API responses should follow the TypeScript types defined in `src/types/`.
 
 ---
 
-## 📄 License
+## Hooks & State Management
 
-MIT License
+This project uses **custom hooks + context providers** for each module:
+
+* `useCustomer` → CRUD + balances
+* `useOrder` → CRUD + bulk pay + filters
+* `useRoles` → CRUD + active toggle
+* `useStatus` → Order status management
+
+**Benefits:**
+
+* Centralized data fetching
+* Cleaner pages and components
+* Easy state sharing between pages
+
+---
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit your changes (`git commit -m 'Add feature'`)
+4. Push to branch (`git push origin feature/your-feature`)
+5. Open a Pull Request
+
+---
+
+## License
+
+This project is **MIT licensed**.
 
 

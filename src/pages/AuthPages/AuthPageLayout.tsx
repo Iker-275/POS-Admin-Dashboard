@@ -2,6 +2,7 @@ import React from "react";
 import GridShape from "../../components/common/GridShape";
 import { Link } from "react-router";
 import ThemeTogglerTwo from "../../components/common/ThemeTogglerTwo";
+import { appName } from "../../api/config";
 
 export default function AuthLayout({
   children,
@@ -26,7 +27,7 @@ export default function AuthLayout({
                 />
               </Link>
               <p className="text-center text-gray-400 dark:text-white/60">
-               © Galdogob Water Company
+               © {appName}
               </p>
             </div>
           </div>

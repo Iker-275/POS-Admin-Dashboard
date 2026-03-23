@@ -1,259 +1,146 @@
-import { useState, useEffect } from "react";
-import { Customer, CreateCustomerPayload } from "../../types/CustomerType";
-import { useCustomer } from "../../hooks/useCustomer";
-import { useZones } from "../../hooks/useZone";
-import { useVillage } from "../../hooks/useVillage";
+// import { useState, useEffect } from "react";
 
-import Select from "../customComponents/DropDowns";
-import Input from "../form/input/InputField";
+// interface Props {
+//   mode: "create" | "edit";
+//   initialData?: {
+//     name: string;
+//     phone: string;
+//   };
+//   onSubmit: (data: { name: string; phone: string }) => void;
+// }
+
+// export default function CustomerForm({ mode, initialData, onSubmit }: Props) {
+//   const [name, setName] = useState("");
+//   const [phone, setPhone] = useState("");
+
+//   useEffect(() => {
+//     if (initialData) {
+//       setName(initialData.name);
+//       setPhone(initialData.phone);
+//     }
+//   }, [initialData]);
+
+//   const handleSubmit = () => {
+//     if (!name || !phone) return;
+//     onSubmit({ name, phone });
+//   };
+
+//   return (
+//     <div className="space-y-4">
+//       <input
+//         placeholder="Name"
+//         value={name}
+//         onChange={(e) => setName(e.target.value)}
+//       />
+
+//       <input
+//         placeholder="Phone"
+//         value={phone}
+//         onChange={(e) => setPhone(e.target.value)}
+//       />
+
+//       <button onClick={handleSubmit}>
+//         {mode === "create" ? "Create" : "Update"}
+//       </button>
+//     </div>
+//   );
+// }
+
+
+import { useState, useEffect } from "react";
+import ComponentCard from "../common/ComponentCard";
 import Label from "../form/Label";
+import Input from "../form/input/InputField";
+import Switch from "../customComponents/Switch";
 import Button from "../ui/button/Button";
 
-interface Props {
-  customer?: Customer;
-  onSuccess?: () => void;
-  onCancel?: () => void;
+interface CustomerFormProps {
+  mode: "create" | "edit";
+  initialData?: {
+    name: string;
+    phone: string;
+    unpaid?: boolean; // optional toggle for unpaid balances
+  };
+  onSubmit: (data: { name: string; phone: string; unpaid: boolean }) => void;
 }
 
 export default function CustomerForm({
-  customer,
-  onSuccess,
-  onCancel
-}: Props) {
+  mode,
+  initialData,
+  onSubmit,
+}: CustomerFormProps) {
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [unpaid, setUnpaid] = useState(false);
+  const [errors, setErrors] = useState<{ name?: string; phone?: string }>({});
 
-  const { createCustomer, updateCustomer, saving } = useCustomer(customer?._id);
-
-  const { zones } = useZones();
-  const { villages } = useVillage();
-
-  const [form, setForm] = useState<CreateCustomerPayload>({
-    name: customer?.name || "",
-    phone: customer?.phone || "",
-    houseNo: customer?.houseNo || "",
-
-    zoneId: customer?.zoneId || "",
-    zoneCode: customer?.zoneCode || "",
-
-    villageId: customer?.villageId || "",
-    villageName: customer?.villageName || "",
-
-    purpose: customer?.purpose || "domestic",
-    businessName: customer?.businessName || "",
-
-    collectorId: customer?.collectorId || "",
-    collectorName: customer?.collectorName || "",
-
-    previousBalance: customer?.balances?.previousBalance || 0,
-
-    meter: {
-      meterNo: customer?.meter?.meterNo || "",
-      initialReading: customer?.meter?.initialReading || 0,
-      currentReading: customer?.meter?.currentReading || 0
-    },
-
-    status: customer?.status || "active"
-  });
-
-  // Auto populate zoneCode + villageName
+  // Initialize state from props
   useEffect(() => {
-
-    const zone = zones.find((z: any) => z._id === form.zoneId);
-    const village = villages.find((v: any) => v._id === form.villageId);
-
-    if (zone) {
-      setForm(prev => ({ ...prev, zoneCode: zone.code }));
+    if (initialData) {
+      setName(initialData.name);
+      setPhone(initialData.phone);
+      setUnpaid(initialData.unpaid ?? false);
     }
+  }, [initialData]);
 
-    if (village) {
-      setForm(prev => ({ ...prev, villageName: village.name }));
-    }
-
-  }, [form.zoneId, form.villageId, zones, villages]);
-
-  const handleChange = (field: string, value: any) => {
-    setForm(prev => ({
-      ...prev,
-      [field]: value
-    }));
+  // Validation
+  const validate = () => {
+    const newErrors: { name?: string; phone?: string } = {};
+    if (!name.trim()) newErrors.name = "Name is required";
+    if (!phone.trim()) newErrors.phone = "Phone is required";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
   };
 
-  const handleMeterChange = (field: string, value: any) => {
-    setForm(prev => ({
-      ...prev,
-      meter: {
-        ...prev.meter,
-        [field]: value
-      }
-    }));
+  const handleSubmit = () => {
+    if (!validate()) return;
+    onSubmit({ name, phone, unpaid });
   };
-
-  const handleSubmit = async () => {
-
-    if (customer) {
-
-      await updateCustomer(form);
-
-    } else {
-
-      await createCustomer(form);
-
-    }
-
-    onSuccess?.();
-  };
-
-  const zoneOptions =
-    zones?.map((z: any) => ({
-      value: z._id,
-      label: z.name
-    })) || [];
-
-  const villageOptions =
-    villages
-      ?.filter((v: any) => v.zoneId === form.zoneId)
-      .map((v: any) => ({
-        value: v._id,
-        label: v.name
-      })) || [];
 
   return (
+    <ComponentCard title={mode === "create" ? "Create Customer" : "Edit Customer"}>
+      <div className="space-y-6">
 
-    <div className="grid gap-6">
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-
+        {/* Name */}
         <div>
-          <Label>Customer Name</Label>
+          <Label>Name</Label>
           <Input
-            value={form.name}
-            onChange={(e) => handleChange("name", e.target.value)}
+            type="text"
+            placeholder="Enter customer name"
+            value={name}
+            onChange={(e: any) => setName(e.target.value)}
           />
+          {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
         </div>
 
+        {/* Phone */}
         <div>
           <Label>Phone</Label>
           <Input
-            value={form.phone}
-            onChange={(e) => handleChange("phone", e.target.value)}
+            type="text"
+            placeholder="Enter phone number"
+            value={phone}
+            onChange={(e: any) => setPhone(e.target.value)}
           />
+          {errors.phone && <p className="text-red-500 text-sm">{errors.phone}</p>}
         </div>
 
-        <div>
-          <Label>House No</Label>
-          <Input
-            value={form.houseNo}
-            onChange={(e) => handleChange("houseNo", e.target.value)}
-          />
-        </div>
-
-        <div>
-          <Label>Purpose</Label>
-          <select
-            value={form.purpose}
-            onChange={(e) => handleChange("purpose", e.target.value)}
-            className="border rounded-lg px-3 py-2 w-full"
-          >
-            <option value="domestic">Domestic</option>
-            <option value="business">Business</option>
-          </select>
-        </div>
-
-        <div>
-          <Label>Zone</Label>
-          <Select
-            options={zoneOptions}
-            placeholder="Select Zone"
-            defaultValue={form.zoneId}
-            onChange={(value) => handleChange("zoneId", value)}
-          />
-        </div>
-
-        <div>
-          <Label>Village</Label>
-          <Select
-            options={villageOptions}
-            placeholder="Select Village"
-            defaultValue={form.villageId}
-            onChange={(value) => handleChange("villageId", value)}
-          />
-        </div>
+        {/* Unpaid Toggle */}
+        {/* <Switch
+          label="Has Unpaid Balances"
+          checked={unpaid}
+          onChange={(value) => setUnpaid(value)}
+        /> */}
 
       </div>
 
-      {/* Meter Section */}
-
-      <div className="border-t pt-5">
-
-        <h4 className="font-semibold mb-4">
-          Meter Information
-        </h4>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-
-          <div>
-            <Label>Meter Number</Label>
-            <Input
-              value={form.meter.meterNo}
-              onChange={(e) =>
-                handleMeterChange("meterNo", e.target.value)
-              }
-            />
-          </div>
-
-          <div>
-            <Label>Initial Reading</Label>
-            <Input
-              type="number"
-              value={form.meter.initialReading}
-              onChange={(e) =>
-                handleMeterChange(
-                  "initialReading",
-                  Number(e.target.value)
-                )
-              }
-            />
-          </div>
-
-          <div>
-            <Label>Current Reading</Label>
-            <Input
-              type="number"
-              value={form.meter.currentReading}
-              onChange={(e) =>
-                handleMeterChange(
-                  "currentReading",
-                  Number(e.target.value)
-                )
-              }
-            />
-          </div>
-
-        </div>
-
-      </div>
-
-      {/* Actions */}
-
-      <div className="flex gap-3 pt-4">
-
-        <Button variant="outline" onClick={handleSubmit} disabled={saving}>
-
-          {saving
-            ? "Saving..."
-            : customer
-            ? "Update Customer"
-            : "Create Customer"}
-
+      {/* Buttons */}
+      <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
+        <Button variant="outline">Cancel</Button>
+        <Button variant="outline" onClick={handleSubmit}>
+          {mode === "create" ? "Create Customer" : "Update Customer"}
         </Button>
-
-        {onCancel && (
-          <Button variant="outline" onClick={onCancel}>
-            Cancel
-          </Button>
-        )}
-
       </div>
-
-    </div>
+    </ComponentCard>
   );
 }

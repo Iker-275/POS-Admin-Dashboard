@@ -1,56 +1,72 @@
+import { useContext, useCallback } from "react";
+import { CustomerContext } from "../context/CustomerContext";
+import {
+  CreateCustomerPayload,
+  UpdateCustomerPayload
+} from "../types/CustomerType";
+
+export const useCustomer = () => {
+  const context = useContext(CustomerContext);
+
+  if (!context) {
+    throw new Error("useCustomer must be used within CustomerProvider");
+  }
+
+  const {
+    customers,
+    selectedCustomer,
+    balances,
+    totals,
+    loading,
+    message,
+
+    fetchCustomers,
+    fetchCustomer,
+    createCustomer,
+    updateCustomer,
+    fetchBalance,
+
+    clearMessage
+  } = context;
+
+  const loadCustomers = useCallback(async () => {
+    await fetchCustomers();
+  }, [fetchCustomers]);
+
+  const loadCustomer = useCallback(async (id: string) => {
+    await fetchCustomer(id);
+  }, [fetchCustomer]);
 
 
-import { useEffect, useState } from "react";
-import { customerService } from "../api/CustomerApi";
-import { Customer, CustomerFilters, Pagination } from "../types/CustomerType";
+const addCustomer = useCallback(async (data: CreateCustomerPayload) => {
+  await createCustomer(data);
+}, [createCustomer]);
 
-interface UseCustomersParams {
-  page?: number;
-  limit?: number;
-  filters?: CustomerFilters;
-}
+const editCustomer = useCallback(async (id: string, data: UpdateCustomerPayload) => {
+  await updateCustomer(id, data);
+}, [updateCustomer]);
 
-export function useCustomers({
-  page = 1,
-  limit = 10,
-  filters = {},
-}: UseCustomersParams) {
-
-  const [customers, setCustomers] = useState<Customer[]>([]);
-  const [pagination, setPagination] = useState<Pagination | null>(null);
-
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchCustomers = async () => {
-    try {
-      setLoading(true);
-
-      const res = await customerService.getCustomers({
-        page,
-        limit,
-        filters,
-      });
-
-      setCustomers(res.data);
-      setPagination(res.pagination);
-
-    } catch (err: any) {
-      setError(err.message || "Failed to fetch customers");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchCustomers();
-  }, [page, limit, filters]);
+  const loadBalance = useCallback(
+    async (phone: string, onlyUnpaid?: boolean) => {
+      await fetchBalance(phone, onlyUnpaid);
+    },
+    [fetchBalance]
+  );
 
   return {
     customers,
-    pagination,
+    selectedCustomer,
+    balances,
+    totals,
     loading,
-    error,
-    refresh: fetchCustomers,
+    message,
+
+    loadCustomers,
+    loadCustomer,
+    addCustomer,
+    editCustomer,
+    loadBalance,
+
+    clearMessage
   };
-}
+};
