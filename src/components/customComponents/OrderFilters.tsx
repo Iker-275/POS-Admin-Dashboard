@@ -2,22 +2,43 @@ import { useState, useEffect } from "react";
 import { OrderFilters } from "../../types/OrderTypes";
 import { useStatus } from "../../hooks/useStatus";
 import { useCustomer } from "../../hooks/useCustomers";
+import { useUsers } from "../../hooks/useUser";
 
 interface Props {
   filters: OrderFilters;
   setFilters: (filters: OrderFilters) => void;
 }
 
+const MONTH_MAP: Record<string, number> = {
+  January: 1,
+  February: 2,
+  March: 3,
+  April: 4,
+  May: 5,
+  June: 6,
+  July: 7,
+  August: 8,
+  September: 9,
+  October: 10,
+  November: 11,
+  December: 12,
+};
+
 export default function OrderFiltersComponent({ filters, setFilters }: Props) {
   const { statuses, loadStatuses } = useStatus();
   const { customers, loadCustomers } = useCustomer();
+  const { users, fetchUsers } = useUsers();
+
 
   const [search, setSearch] = useState(filters.customer || "");
+
+
 
   // load dependencies
   useEffect(() => {
     loadStatuses({ visible: true });
     loadCustomers();
+    fetchUsers();
   }, []);
 
   // debounce search
@@ -61,8 +82,28 @@ export default function OrderFiltersComponent({ filters, setFilters }: Props) {
         >
           <option value="">All Customers</option>
           {customers.map((c) => (
-            <option key={c._id} value={c.name}>
+            <option key={c._id} value={c.phone}>
               {c.name}
+            </option>
+          ))}
+        </select>
+
+        {/* waiter dropdown */}
+        <select
+          value={filters.user_id || ""}
+          onChange={(e) =>
+            setFilters({
+              ...filters,
+              user_id: e.target.value,
+              page: 1,
+            })
+          }
+          className="border rounded-lg px-3 py-2"
+        >
+          <option value="">All Users</option>
+          {users.map((u) => (
+            <option key={u._id} value={u._id}>
+              {u.name || u.email}
             </option>
           ))}
         </select>
@@ -95,11 +136,11 @@ export default function OrderFiltersComponent({ filters, setFilters }: Props) {
               ...filters,
               date: e.target.value
                 ? new Date(e.target.value)
-                    .toISOString()
-                    .split("T")[0]
-                    .split("-")
-                    .reverse()
-                    .join("-") // convert to DD-MM-YYYY
+                  .toISOString()
+                  .split("T")[0]
+                  .split("-")
+                  .reverse()
+                  .join("-") // convert to DD-MM-YYYY
                 : undefined,
               page: 1,
             })
@@ -134,22 +175,25 @@ export default function OrderFiltersComponent({ filters, setFilters }: Props) {
         />
 
         {/* 📆 Month */}
+
         <select
-          onChange={(e) =>
+          onChange={(e) => {
+            const value = e.target.value;
+
             setFilters({
               ...filters,
-              month: e.target.value,
+              month: value ? MONTH_MAP[value] : undefined, // 👈 convert to number
               page: 1,
-            })
-          }
+            });
+          }}
           className="border rounded-lg px-3 py-2"
         >
           <option value="">All Months</option>
-          {[
-            "January","February","March","April","May","June",
-            "July","August","September","October","November","December"
-          ].map((m) => (
-            <option key={m} value={m}>{m}</option>
+
+          {Object.keys(MONTH_MAP).map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
           ))}
         </select>
 

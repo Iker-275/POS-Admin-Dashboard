@@ -69,6 +69,7 @@ export interface OrderFilters {
   // basic filters
   status?: string;
   customer?: string;
+  user_id?: string;
 
   // date filters
   date?: string; // format: DD-MM-YYYY

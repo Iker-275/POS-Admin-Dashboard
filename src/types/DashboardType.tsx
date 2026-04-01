@@ -1,76 +1,57 @@
-import { Pagination } from "./NotificationType"; // reuse if already exists
-
-// ================= VISITS =================
-export interface Visit {
-  _id: string;
-  customerId: {
-    _id: string;
-    customerCode: string;
-    name: string;
-  };
-  collectorId: string;
-  lastReading: number;
-  currentReading: number;
-  isBilled: boolean;
-  notes?: string;
-  dateOfVisit: string;
-  visitedAt: string;
-  createdAt: string;
-  updatedAt: string;
+export interface DashboardSummary {
+  totalOrders: number;
+  totalCustomers: number;
+  totalSales: number;
+  totalPaid: number;
+  totalUnpaid: number;
 }
 
-// ================= PAYMENTS =================
-export interface Payment {
-  _id: string;
-  customerId: {
-    _id: string;
-    customerCode: string;
-    name: string;
-  };
-  amountCents: number;
+export interface MonthlyData {
+  _id: string; // month name
+  totalSales: number;
+  totalPaid: number;
+  totalUnpaid: number;
+}
+
+export interface DishOrdered {
+  menuItem: string;
+  qty: number;
+  priceAtPurchase: number;
+  pricePerQty: number;
   currency: string;
-  method: string;
+  totalAmount: number;
+  _id: string;
+}
+
+export interface RecentOrder {
+  _id: string;
+  orderId: number;
+  customer_name: string;
+  customer_phone: string;
+  orderTotal: number;
+  paidAmount: number;
+  balance: number;
   status: string;
-  receivedAt: string;
-}
-
-// ================= TREND =================
-export interface BillingTrend {
+  paymentStatus: string;
+  createdAt: string;
   month: string;
-  billed: number;
-  paid: number;
+  year: string;
+  dishesOrdered: DishOrdered[];
 }
 
-// ================= DASHBOARD =================
-export interface DashboardData {
-  currentMonth: string;
-
-  visits: {
-    total: number;
-    recent: Visit[];
-  };
-
-  customers: {
-    total: number;
-  };
-
-  billingVsPayments: {
-    totalBilled: number;
-    totalPayments: number;
-  };
-
-  billingVsPaymentsTrend: BillingTrend[];
-
-  payments: {
-    total: number;
-    recent: Payment[];
-  };
+export interface Customer {
+  _id: string;
+  name: string;
+  phone: string;
+  active: boolean;
+  userId: string | null;
+  createdAt: string;
 }
 
-// ================= RESPONSE =================
 export interface DashboardResponse {
   success: boolean;
-  message: string;
-  data: DashboardData;
-  pagination?: Pagination | null;
+  summary: DashboardSummary;
+  monthly: MonthlyData[];
+  recentOrders: RecentOrder[];
+  newCustomers: Customer[];
 }

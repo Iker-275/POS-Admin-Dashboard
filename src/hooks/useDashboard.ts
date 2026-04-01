@@ -1,34 +1,18 @@
-import { useEffect, useState } from "react";
-import { dashboardService } from "../api/DashboardApi";
+
 import { useDashboardContext } from "../context/DashboardContext";
 
-export function useDashboard() {
-  const { dashboard, setDashboard } = useDashboardContext();
-
-  const [loading, setLoading] = useState(false);
-
-  const fetchDashboard = async () => {
-    try {
-      setLoading(true);
-
-      const res = await dashboardService.getDashboard();
-
-      setDashboard(res.data);
-
-    } catch (err: any) {
-      alert(err.message || "Failed to load dashboard");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchDashboard();
-  }, []);
+export const useDashboard = () => {
+  const { data, loading, error, refresh } = useDashboardContext();
 
   return {
-    dashboard,
     loading,
-    refresh: fetchDashboard
+    error,
+    refresh,
+    dashboard: data, // 👈 ADD THIS (so your page works unchanged)
+    
+    summary: data?.summary,
+    monthly: data?.monthly || [],
+    recentOrders: data?.recentOrders || [],
+    newCustomers: data?.newCustomers || [],
   };
-}
+};

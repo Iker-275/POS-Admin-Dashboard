@@ -13,6 +13,14 @@ export const getOrders = async (params?: OrderFilters) => {
   return res.data;
 };
 
+export const getOrdersReport = async (filters: OrderFilters) => {
+
+    const res = await api.get("/order/PDFreport", { params: filters, responseType: "blob" });
+
+    return res.data;
+
+  };
+
 // GET SINGLE
 export const getOrder = async (id: string) => {
   const res = await api.get<SingleOrderResponse>(`${BASE}/${id}`);
@@ -44,3 +52,4 @@ export const bulkPayOrders = async (orderIds: number[]) => {
   const res = await api.post(`${BASE}/bulk-pay`, { orderIds });
   return res.data as { success: boolean; message: string };
 };
+

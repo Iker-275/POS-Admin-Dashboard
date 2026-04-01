@@ -1,31 +1,29 @@
-export function RecentVisits({ visits }: any) {
+export function RecentOrders({ orders }: any) {
   return (
     <div className="rounded-2xl border bg-white p-5">
-      <h3 className="text-lg font-semibold mb-4">Recent Visits</h3>
+      <h3 className="text-lg font-semibold mb-4">Recent Orders</h3>
 
       <table className="w-full text-sm">
         <thead>
           <tr className="text-left text-gray-500">
             <th>Customer</th>
-            <th>Reading</th>
+            <th>Total</th>
+            <th>Status</th>
             <th>Date</th>
           </tr>
         </thead>
 
         <tbody>
-          {visits.map((v: any) => (
-            <tr key={v._id} className="border-t">
-              <td>
-                {v.customerId?.name}
-                <div className="text-xs text-gray-400">
-                  {v.customerId?.customerCode}
-                </div>
-              </td>
+          {orders.map((o: any) => (
+            <tr key={o._id} className="border-t">
+              <td>{o.customer_name || "Walk-in"}</td>
 
-              <td>{v.currentReading}</td>
+              <td>${o.orderTotal}</td>
+
+              <td>{o.paymentStatus}</td>
 
               <td>
-                {new Date(v.visitedAt).toLocaleDateString()}
+                {new Date(o.createdAt).toLocaleDateString()}
               </td>
             </tr>
           ))}
@@ -35,37 +33,27 @@ export function RecentVisits({ visits }: any) {
   );
 }
 
-export function RecentPayments({ payments }: any) {
+export function NewCustomers({ customers }: any) {
   return (
     <div className="rounded-2xl border bg-white p-5">
-      <h3 className="text-lg font-semibold mb-4">Recent Payments</h3>
+      <h3 className="text-lg font-semibold mb-4">New Customers</h3>
 
       <table className="w-full text-sm">
         <thead>
           <tr className="text-left text-gray-500">
-            <th>Customer</th>
-            <th>Amount</th>
-            <th>Status</th>
+            <th>Name</th>
+            <th>Phone</th>
             <th>Date</th>
           </tr>
         </thead>
 
         <tbody>
-          {payments.map((p: any) => (
-            <tr key={p._id} className="border-t">
+          {customers.map((c: any) => (
+            <tr key={c._id} className="border-t">
+              <td>{c.name}</td>
+              <td>{c.phone}</td>
               <td>
-                {p.customerId?.name}
-                <div className="text-xs text-gray-400">
-                  {p.customerId?.customerCode}
-                </div>
-              </td>
-
-              <td>${p.amountCents}</td>
-
-              <td>{p.status}</td>
-
-              <td>
-                {new Date(p.receivedAt).toLocaleDateString()}
+                {new Date(c.createdAt).toLocaleDateString()}
               </td>
             </tr>
           ))}

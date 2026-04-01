@@ -10,7 +10,6 @@ import Badge from "../../ui/badge/Badge";
 import { Link } from "react-router";
 import { useUsers } from "../../../hooks/useUser";
 import { useRoles } from "../../../hooks/useRoles";
-import { Customer } from "../../../types/CustomerType";
 import { useMenu } from "../../../hooks/useMenu";
 import { useEffect, useState } from "react";
 import { useStatus } from "../../../hooks/useStatus";
@@ -56,6 +55,13 @@ function UsersTable() {
                   isHeader
                   className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
                 >
+                  Name
+                </TableCell>
+                
+                <TableCell
+                  isHeader
+                  className="px-5 py-3 font-medium text-gray-500 text-start text-theme-xs dark:text-gray-400"
+                >
                   Role
                 </TableCell>
 
@@ -83,6 +89,10 @@ function UsersTable() {
                   <TableCell className="px-5 py-4 text-start">
 
                     {user.email}
+                  </TableCell>
+                  <TableCell className="px-5 py-4 text-start">
+
+                    {user.name || "-"}
                   </TableCell>
 
                   <TableCell className="px-5 py-4 text-start">
@@ -225,19 +235,13 @@ function UsersTable() {
  function OrdersTable({
   filters,
   setFilters,
+  onPreviewPdf
 }: {
   filters: OrderFilters;
   setFilters: (filters: OrderFilters) => void;
+  onPreviewPdf: () => void;
 }) {
-  const {
-    orders,
-    loading,
-    page,
-    totalPages,
-    loadOrders,
-    cancel,
-    bulkPayOrders,
-  } = useOrder();
+  const { orders, loading,totalPages, loadOrders, cancel, bulkPayOrders, } = useOrder();
 
   const [selectedOrders, setSelectedOrders] = useState<number[]>([]);
 
@@ -306,8 +310,19 @@ function UsersTable() {
             </button>
           )}
         </div>
-      </div>
+        <div className="flex justify-end">
 
+          <button
+            onClick={onPreviewPdf}
+            className="px-4 py-2 bg-red-600 text-white rounded-lg"
+          >
+            Preview PDF
+          </button>
+
+        </div>
+        
+      </div>
+       
       <div className="overflow-hidden rounded-xl border bg-white">
         <div className="overflow-x-auto">
 
@@ -522,7 +537,7 @@ function StatusTable() {
                     <div className="flex gap-3">
 
                       <Link
-                        to={`/status/edit/${s._id}`}
+                        to={`/order-status/edit/${s._id}`}
                         className="text-blue-500"
                       >
                         Edit

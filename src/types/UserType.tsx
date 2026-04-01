@@ -1,6 +1,7 @@
 export interface User {
   _id: string;
   email: string;
+  name: string | null;
   role: string;
   active: boolean;
   createdAt: string;

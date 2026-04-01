@@ -9,15 +9,32 @@ import OrderFilters from "../../components/customComponents/OrderFilters";
 import { OrderFilters as OrderFiltersType } from "../../types/OrderTypes";
 import OrdersSummaryCards from "../../components/customComponents/OrderSummary";
 import { useOrder } from "../../hooks/useOrder";
+import { getOrdersReport } from "../../api/OrderApi";
+import PdfPreviewModal from "../../components/customComponents/PDFPreview";
 
 export default function OrdersPage() {
+     const [pdfOpen, setPdfOpen] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState("");
     const {totals}= useOrder();
+
+    
+
 
   const [filters, setFilters] = useState<OrderFiltersType>({
     page: 1,
     limit: 10,
   });
 
+  const previewPdf = async () => {
+  
+      const blob = await getOrdersReport(filters);
+  
+      const url = URL.createObjectURL(blob);
+  
+      setPdfUrl(url);
+      setPdfOpen(true);
+  
+    };
   return (
     <>
       <PageMeta title="Orders" description="Manage Orders" />
@@ -34,8 +51,14 @@ export default function OrdersPage() {
 
         {/* TABLE */}
         <ComponentCard title="Orders">
-          <OrdersTable filters={filters} setFilters={setFilters} />
+          <OrdersTable filters={filters} setFilters={setFilters} onPreviewPdf={previewPdf} />
         </ComponentCard>
+
+          <PdfPreviewModal
+              open={pdfOpen}
+              url={pdfUrl}
+              onClose={() => setPdfOpen(false)}
+            />
 
       </div>
     </>

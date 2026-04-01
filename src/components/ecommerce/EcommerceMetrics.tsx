@@ -1,24 +1,15 @@
 export default function EcommerceMetrics({ data }: any) {
+  const summary = data?.summary;
+
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-6">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:grid-cols-5 md:gap-6">
       
-      {/* Customers */}
-      <MetricCard
-        title="Customers"
-        value={data?.customers?.total || 0}
-      />
+      <MetricCard title="Orders" value={summary?.totalOrders || 0} />
+      <MetricCard title="Customers" value={summary?.totalCustomers || 0} />
+      <MetricCard title="Sales" value={`$${summary?.totalSales || 0}`} />
+      <MetricCard title="Paid" value={`$${summary?.totalPaid || 0}`} />
+      <MetricCard title="Unpaid" value={`$${summary?.totalUnpaid || 0}`} />
 
-      {/* Visits */}
-      <MetricCard
-        title="Visits"
-        value={data?.visits?.total || 0}
-      />
-
-      {/* Payments */}
-      <MetricCard
-        title="Payments"
-        value={data?.payments?.total || 0}
-      />
     </div>
   );
 }

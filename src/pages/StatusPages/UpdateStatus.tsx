@@ -12,7 +12,7 @@ export default function UpdateStatus() {
 
   const handleUpdate = async (data: any) => {
     await editStatus(id!, { name: data.name });
-    navigate("/status");
+    navigate("/order-status");
   };
 
   if (!status) return <p>Loading...</p>;

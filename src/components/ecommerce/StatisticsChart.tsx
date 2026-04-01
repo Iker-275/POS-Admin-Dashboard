@@ -74,23 +74,18 @@ function buildChartOptions(categories: string[]): ApexOptions {
   };
 }
 
-export default function BillingVsPaymentsChart({ data }: any) {
-  const trend = data?.billingVsPaymentsTrend || [];
 
-  // Format months nicely (2026-03 → Mar 2026)
-  const categories = trend.map((t: any) => {
-    const date = new Date(t.month + "-01");
-    return date.toLocaleString("default", {
-      month: "short",
-      year: "numeric",
-    });
-  });
 
-  const billed = trend.map((t: any) => t.billed);
-  const paid = trend.map((t: any) => t.paid);
+export default function SalesVsPaymentsChart({ data }: any) {
+  const monthly = data?.monthly || [];
+
+  const categories = monthly.map((m: any) => m._id);
+
+  const sales = monthly.map((m: any) => m.totalSales);
+  const paid = monthly.map((m: any) => m.totalPaid);
 
   const series = [
-    { name: "Billed", data: billed },
+    { name: "Sales", data: sales },
     { name: "Paid", data: paid },
   ];
 
@@ -99,7 +94,7 @@ export default function BillingVsPaymentsChart({ data }: any) {
   return (
     <div className="rounded-2xl border bg-white p-5 dark:bg-white/[0.03]">
       <h3 className="text-lg font-semibold mb-4">
-        Billing vs Payments Trend
+        Sales vs Payments
       </h3>
 
       <Chart options={options} series={series} type="area" height={310} />
