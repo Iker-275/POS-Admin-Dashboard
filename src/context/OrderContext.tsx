@@ -46,8 +46,6 @@ export const OrderProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     setLoading(true);
 
     const res = await orderApi.getOrders(params || {});
-
-    console.log("params: ",params);
     
 
     setOrders(res.data);

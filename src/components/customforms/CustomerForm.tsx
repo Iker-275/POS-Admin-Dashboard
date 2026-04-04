@@ -1,57 +1,9 @@
-// import { useState, useEffect } from "react";
-
-// interface Props {
-//   mode: "create" | "edit";
-//   initialData?: {
-//     name: string;
-//     phone: string;
-//   };
-//   onSubmit: (data: { name: string; phone: string }) => void;
-// }
-
-// export default function CustomerForm({ mode, initialData, onSubmit }: Props) {
-//   const [name, setName] = useState("");
-//   const [phone, setPhone] = useState("");
-
-//   useEffect(() => {
-//     if (initialData) {
-//       setName(initialData.name);
-//       setPhone(initialData.phone);
-//     }
-//   }, [initialData]);
-
-//   const handleSubmit = () => {
-//     if (!name || !phone) return;
-//     onSubmit({ name, phone });
-//   };
-
-//   return (
-//     <div className="space-y-4">
-//       <input
-//         placeholder="Name"
-//         value={name}
-//         onChange={(e) => setName(e.target.value)}
-//       />
-
-//       <input
-//         placeholder="Phone"
-//         value={phone}
-//         onChange={(e) => setPhone(e.target.value)}
-//       />
-
-//       <button onClick={handleSubmit}>
-//         {mode === "create" ? "Create" : "Update"}
-//       </button>
-//     </div>
-//   );
-// }
 
 
 import { useState, useEffect } from "react";
 import ComponentCard from "../common/ComponentCard";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
-import Switch from "../customComponents/Switch";
 import Button from "../ui/button/Button";
 
 interface CustomerFormProps {

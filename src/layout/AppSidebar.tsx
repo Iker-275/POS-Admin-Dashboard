@@ -6,16 +6,11 @@ import { Link, useLocation, } from "react-router-dom";
 // Assume these icons are imported from an icon library
 import {
   BoxCubeIcon,
-  CalenderIcon,
   ChevronDownIcon,
   GridIcon,
   HorizontaLDots,
-  ListIcon,
-  PieChartIcon,
   UserCircleIcon,
-  DollarLineIcon,
-  MailIcon,
-  TaskIcon
+  MailIcon
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
 import SidebarWidget from "./SidebarWidget";
