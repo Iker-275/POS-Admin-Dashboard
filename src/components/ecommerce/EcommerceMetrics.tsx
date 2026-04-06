@@ -14,6 +14,7 @@ export default function EcommerceMetrics({ data }: any) {
   );
 }
 
+
 function MetricCard({ title, value }: any) {
   return (
     <div className="rounded-2xl border bg-white p-5 dark:bg-white/[0.03]">

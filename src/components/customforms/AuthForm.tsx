@@ -14,7 +14,7 @@ interface Props {
 export default function AuthForm({ mode }: Props) {
     const nav = useNavigate();
 
-    const { loginUser, signupUser,} = useAuth();
+    const { loginUser, signupUser, loading } = useAuth();
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -30,12 +30,12 @@ export default function AuthForm({ mode }: Props) {
         try {
 
             if (isSignup) {
-                 await signupUser(email, password);
+                await signupUser(email, password);
             } else {
-                 await loginUser(email, password);
+                await loginUser(email, password);
 
             }
-              nav("/")
+            nav("/")
 
         } catch (err) {
             console.log(err);
@@ -45,7 +45,11 @@ export default function AuthForm({ mode }: Props) {
     return (
 
         <div className="flex flex-col flex-1 w-full overflow-y-auto lg:w-1/2">
-
+            {loading && (
+                <div className="flex justify-center py-10">
+                    <div className="animate-spin h-8 w-8 border-b-2 border-brand-500 rounded-full"></div>
+                </div>
+            )}
             <div className="flex flex-col justify-center flex-1 w-full max-w-md mx-auto">
 
                 <div>
@@ -60,7 +64,7 @@ export default function AuthForm({ mode }: Props) {
 
                         <p className="text-sm text-gray-500 dark:text-gray-400">
 
-                            {isSignup
+                            { isSignup
                                 ? "Create your account"
                                 : "Enter your credentials to continue"}
 
@@ -163,11 +167,14 @@ export default function AuthForm({ mode }: Props) {
 
                             {/* BUTTON */}
 
-                            <Button variant="outline" className="w-full" size="sm">
+                             <Button variant="outline" className="w-full" size="sm">
 
-                                {isSignup ? "Create Account" : "Sign In"}
+                                {loading ? (isSignup ? "Creating Account..." : "Signing In...") : (isSignup ? "Create Account" : "Sign In")}
 
                             </Button>
+
+
+                            
 
                         </div>
 

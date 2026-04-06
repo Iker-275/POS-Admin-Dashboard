@@ -3,4 +3,6 @@ export const headers = {
   "Content-Type": "application/json",
 };
 
-export const appName = "Haldoor Restaurant"
+export const appName = "Tawakal Restaurant"
+
+// export const appName = "Haldoor Restaurant"

@@ -66,7 +66,7 @@ const loginUser = async (email: string, password: string) => {
 
   login(res.token, res.user);
    if(res.token){
-    alert("Success")
+   // alert("Success")
     
   }
   setLoading(false)
