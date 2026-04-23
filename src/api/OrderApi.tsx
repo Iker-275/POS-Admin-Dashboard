@@ -49,7 +49,7 @@ export const cancelOrder = async (id: string) => {
 
 // BULK PAY
 export const bulkPayOrders = async (orderIds: number[]) => {
-  const res = await api.post(`${BASE}/bulk-pay`, { orderIds });
+  const res = await api.put(`${BASE}/bulk-pay`, { orderIds });
   return res.data as { success: boolean; message: string };
 };
 

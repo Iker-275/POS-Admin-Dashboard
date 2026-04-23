@@ -28,6 +28,7 @@ import CustomersPage from "../pages/CustomerPages/Customers";
 import CustomerDetails from "../pages/CustomerPages/CustomerDetails";
 import CreateCustomer from "../pages/CustomerPages/CreateCustomer";
 import UpdateCustomer from "../pages/CustomerPages/UpdateCustomer";
+import { RoleRoute } from "../pages/GuardedRoutes/RoleRoutes";
 
 
 
@@ -46,41 +47,42 @@ const AppRoutes = () => {
 
           <Route element={<AppLayout />}>
 
-            <Route path="/" element={<Home />} />
+            <Route element={<RoleRoute />}>
+              <Route path="/" element={<Home />} />
 
-            <Route path="/users" element={<Users />} />
-            <Route path="/users/edit/:id" element={<EditUser />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/users/edit/:id" element={<EditUser />} />
 
 
-            <Route path="/roles" element={<Roles />} />
-            <Route path="/roles/create" element={<CreateRole />} />
-            <Route path="/roles/edit/:id" element={<UpdateRole />} />
+              <Route path="/roles" element={<Roles />} />
+              <Route path="/roles/create" element={<CreateRole />} />
+              <Route path="/roles/edit/:id" element={<UpdateRole />} />
 
-            <Route path="/menu" element={<Menu />} />
-            <Route path="/menu/create" element={<CreateMenu />} />
-            <Route path="/menu/edit/:id" element={<UpdateMenu />} />
+              <Route path="/menu" element={<Menu />} />
+              <Route path="/menu/create" element={<CreateMenu />} />
+              <Route path="/menu/edit/:id" element={<UpdateMenu />} />
 
-            <Route path="/order-status" element={<Status />} />
-            <Route path="/order-status/create" element={<CreateStatus />} />
-            <Route path="/order-status/edit/:id" element={<UpdateStatus />} />
+              <Route path="/order-status" element={<Status />} />
+              <Route path="/order-status/create" element={<CreateStatus />} />
+              <Route path="/order-status/edit/:id" element={<UpdateStatus />} />
 
-            <Route path="/orders" element={<OrdersPage />} />
-            <Route path="/orders/:id" element={<OrderDetailsPage/>} />
-            
+              <Route path="/orders" element={<OrdersPage />} />
+              <Route path="/orders/:id" element={<OrderDetailsPage />} />
 
-         
 
-            <Route path="/customers" element={<CustomersPage />} />
-            <Route path="/customers/:id" element={<CustomerDetails />} />
-            <Route path="/customers/create" element={<CreateCustomer />} />
-            
-            <Route path="/customers/edit/:id" element={<UpdateCustomer />} />
 
-            <Route path="/notifications/create" element={<CreateNotification />} />
 
-            <Route path="*" element={<NotFound />} />
+              <Route path="/customers" element={<CustomersPage />} />
+              <Route path="/customers/:id" element={<CustomerDetails />} />
+              <Route path="/customers/create" element={<CreateCustomer />} />
 
-    
+              <Route path="/customers/edit/:id" element={<UpdateCustomer />} />
+
+              <Route path="/notifications/create" element={<CreateNotification />} />
+
+              <Route path="*" element={<NotFound />} />
+
+            </Route>
           </Route>
 
         </Route>
